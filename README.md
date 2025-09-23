@@ -80,16 +80,14 @@ python scripts/update-stats.py
 
 | 難度 | 已解題數 |
 |------|----------|
-| 🟢 Easy | 5 |
+| 🟢 Easy | 1 |
 | 🟡 Medium | 0 |
 | 🔴 Hard | 0 |
-| **總計** | **5** |
+| **總計** | **1** |
 
 
 ## 最近練習
 
 | 題號 | 題目 | 難度 | 完成日期 |
 |------|------|------|----------|
-| 1 | [Two Sum](./problems/00001-two-sum) | 🟢 Easy | 2025-09-23 |
 | 20 | [Valid Parentheses](./problems/00020-valid-parentheses) | 🟢 Easy | 2025-09-23 |
-| 88 | [Merge Sorted Array](./problems/00088-merge-sorted-array) | 🟢 Easy | 2025-09-23 |
