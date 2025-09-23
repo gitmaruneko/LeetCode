@@ -1,0 +1,46 @@
+# {{problem_id}}. {{problem_title}}
+
+> **題目資訊**  
+> 🔗 [LeetCode](https://leetcode.com/problems/{{url_slug}}/) | 🎯 **{{difficulty_title}}** | 🏷️ {{tags_display}} | 📅 {{date_solved}}
+
+## 題目描述
+
+{{problem_description}}
+
+## 解題思路
+
+### 方法一：{{method_1_name}}
+
+{{method_1_description}}
+
+**算法步驟：**
+1. {{step_1}}
+2. {{step_2}}
+3. {{step_3}}
+
+### 方法二：{{method_2_name}} (可選)
+
+{{method_2_description}}
+
+## 複雜度分析
+
+### 方法一
+- **時間複雜度**：O({{time_complexity_1}})
+- **空間複雜度**：O({{space_complexity_1}})
+
+### 方法二 (可選)
+- **時間複雜度**：O({{time_complexity_2}})
+- **空間複雜度**：O({{space_complexity_2}})
+
+## 相關標籤
+
+{{tags}}
+
+## 相關題目
+
+- [{{related_problem_1}}]({{related_link_1}})
+- [{{related_problem_2}}]({{related_link_2}})
+
+## 注意事項
+
+{{notes}}

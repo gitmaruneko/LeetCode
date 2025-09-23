@@ -1,0 +1,24 @@
+id: {{problem_id}}
+title: "{{problem_title}}"
+url_slug: "{{url_slug}}"
+difficulty: "{{difficulty}}"  # easy, medium, hard
+tags:
+  - "{{tag_1}}"
+  - "{{tag_2}}"
+  - "{{tag_3}}"
+topics:
+  - "{{topic_1}}"
+  - "{{topic_2}}"
+date_created: "{{date_created}}"
+date_solved: "{{date_solved}}"
+languages:
+  - python
+  - cpp
+  - javascript
+notes: |
+  {{notes}}
+related_problems:
+  - id: {{related_id_1}}
+    title: "{{related_title_1}}"
+  - id: {{related_id_2}}
+    title: "{{related_title_2}}"
