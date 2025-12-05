@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-LeetCode 練習統計工具
-基於新的專案結構：以題目為中心的組織方式
-自動統計已完成的題目數量和進度
+LeetCode Practice Statistics Tool
+Based on new project structure: problem-centric organization
+Automatically count completed problems and progress
 """
 
 import os
@@ -13,11 +13,11 @@ from datetime import datetime
 
 
 def parse_frontmatter(readme_content):
-    """解析 README 中的 YAML frontmatter"""
+    """Parse YAML frontmatter from README"""
     if not readme_content.startswith('---'):
         return None
     
-    # 找到第二個 --- 的位置
+    # Find the second --- position
     end_marker = readme_content.find('---', 3)
     if end_marker == -1:
         return None
@@ -30,7 +30,7 @@ def parse_frontmatter(readme_content):
 
 
 def scan_problems(problems_dir):
-    """掃描 problems 目錄，從 README frontmatter 統計已完成的題目"""
+    """Scan problems directory, count completed problems from README frontmatter"""
     stats = {
         'easy': 0,
         'medium': 0,
@@ -45,7 +45,7 @@ def scan_problems(problems_dir):
     if not os.path.exists(problems_dir):
         return stats
     
-    # 掃描所有題目資料夾
+    # Scan all problem folders
     problem_dirs = [d for d in os.listdir(problems_dir) 
                    if os.path.isdir(os.path.join(problems_dir, d)) and re.match(r'\d{5}-', d)]
     
@@ -60,7 +60,7 @@ def scan_problems(problems_dir):
             with open(readme_file, 'r', encoding='utf-8') as f:
                 readme_content = f.read()
             
-            # 解析 frontmatter
+            # Parse frontmatter
             meta_data = parse_frontmatter(readme_content)
             if not meta_data:
                 continue
@@ -77,43 +77,43 @@ def scan_problems(problems_dir):
             
             stats['problems'].append(problem_info)
             
-            # 統計難度
+            # Count by difficulty
             difficulty = problem_info['difficulty'].lower()
             if difficulty in ['easy', 'medium', 'hard']:
                 stats[difficulty] += 1
             
-            # 統計語言
+            # Count by language
             for lang in problem_info['languages']:
                 stats['languages'][lang] += 1
             
-            # 統計標籤
+            # Count by tags
             for tag in problem_info['tags']:
-                if tag not in ['tag1', 'tag2', 'tag3']:  # 過濾模板標籤
+                if tag not in ['tag1', 'tag2', 'tag3']:  # Filter template tags
                     stats['tags'][tag] += 1
             
-            # 收集最近問題
+            # Collect recent problems
             if problem_info['date_solved']:
                 stats['recent_problems'].append(problem_info)
         
         except Exception as e:
-            print(f"⚠️  讀取 {readme_file} 時出錯: {e}")
+            print(f"⚠️  Error reading {readme_file}: {e}")
             continue
     
     stats['total'] = len(stats['problems'])
     
-    # 按日期排序最近問題
+    # Sort recent problems by date
     stats['recent_problems'].sort(key=lambda x: x['date_solved'], reverse=True)
-    stats['recent_problems'] = stats['recent_problems'][:10]  # 只保留最近10個
+    stats['recent_problems'] = stats['recent_problems'][:10]  # Keep only latest 10
     
     return stats
 
 
 def generate_index_by_difficulty(stats):
-    """生成按難度分類的索引"""
-    index_content = "# LeetCode 題目索引 - 按難度分類\n\n"
+    """Generate index classified by difficulty"""
+    index_content = "# LeetCode Problem Index - By Difficulty\n\n"
     
     difficulties = ['easy', 'medium', 'hard']
-    difficulty_names = {'easy': '簡單', 'medium': '中等', 'hard': '困難'}
+    difficulty_names = {'easy': 'Easy', 'medium': 'Medium', 'hard': 'Hard'}
     difficulty_emojis = {'easy': '✅', 'medium': '🟡', 'hard': '🔴'}
     
     for difficulty in difficulties:
@@ -121,8 +121,8 @@ def generate_index_by_difficulty(stats):
         if not problems:
             continue
         
-        index_content += f"## {difficulty_emojis[difficulty]} {difficulty_names[difficulty]} ({len(problems)} 題)\n\n"
-        index_content += "| 題號 | 題目 | 語言 | 標籤 |\n"
+        index_content += f"## {difficulty_emojis[difficulty]} {difficulty_names[difficulty]} ({len(problems)} problems)\n\n"
+        index_content += "| ID | Problem | Languages | Tags |\n"
         index_content += "|------|------|------|------|\n"
         
         for problem in sorted(problems, key=lambda x: x['id']):
@@ -138,22 +138,22 @@ def generate_index_by_difficulty(stats):
 
 
 def generate_index_by_tags(stats):
-    """生成按標籤分類的索引"""
+    """Generate index classified by tags"""
     if not stats['tags']:
         return ""
     
-    index_content = "# LeetCode 題目索引 - 按標籤分類\n\n"
+    index_content = "# LeetCode Problem Index - By Tags\n\n"
     
     for tag, count in stats['tags'].most_common():
-        if tag in ['tag1', 'tag2', 'tag3']:  # 跳過模板標籤
+        if tag in ['tag1', 'tag2', 'tag3']:  # Skip template tags
             continue
         
         problems = [p for p in stats['problems'] if tag in p['tags']]
         if not problems:
             continue
         
-        index_content += f"## {tag} ({count} 題)\n\n"
-        index_content += "| 題號 | 題目 | 難度 | 語言 |\n"
+        index_content += f"## {tag} ({count} problems)\n\n"
+        index_content += "| ID | Problem | Difficulty | Languages |\n"
         index_content += "|------|------|------|------|\n"
         
         for problem in sorted(problems, key=lambda x: x['id']):
@@ -169,14 +169,14 @@ def generate_index_by_tags(stats):
 
 
 def update_readme(readme_path, stats):
-    """更新主 README.md 中的統計資訊"""
+    """Update statistics in main README.md"""
     if not os.path.exists(readme_path):
         return
     
     with open(readme_path, 'r', encoding='utf-8') as f:
         content = f.read()
     
-    # 更新統計表格 - 簡化版本
+    # Update statistics table - simplified version
     stats_section = f"""## 統計資訊
 
 | 難度 | 已解題數 |
@@ -211,49 +211,49 @@ def update_readme(readme_path, stats):
 
 
 def main():
-    """主函數"""
+    """Main function"""
     project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     problems_dir = os.path.join(project_root, 'problems')
     readme_path = os.path.join(project_root, 'README.md')
     
-    # 統計題目
+    # Count problems
     stats = scan_problems(problems_dir)
     
-    # 顯示統計結果
-    print("=== LeetCode 練習統計 ===")
-    print(f"簡單題目: {stats['easy']}")
-    print(f"中等題目: {stats['medium']}")
-    print(f"困難題目: {stats['hard']}")
-    print(f"總計: {stats['total']}")
+    # Display statistics
+    print("=== LeetCode Practice Statistics ===")
+    print(f"Easy: {stats['easy']}")
+    print(f"Medium: {stats['medium']}")
+    print(f"Hard: {stats['hard']}")
+    print(f"Total: {stats['total']}")
     
     if stats['languages']:
-        print(f"\n語言統計: {dict(stats['languages'])}")
+        print(f"\nLanguage stats: {dict(stats['languages'])}")
     
     if stats['tags']:
         top_tags = dict(stats['tags'].most_common(5))
-        print(f"熱門標籤: {top_tags}")
+        print(f"Popular tags: {top_tags}")
     
-    # 更新 README
+    # Update README
     update_readme(readme_path, stats)
-    print(f"\n✅ README.md 已更新！")
+    print(f"\n✅ README.md updated!")
     
-    # 生成索引檔案
+    # Generate index files
     index_dir = os.path.join(project_root, 'docs')
     if not os.path.exists(index_dir):
         os.makedirs(index_dir)
     
-    # 按難度索引
+    # Index by difficulty
     difficulty_index = generate_index_by_difficulty(stats)
     with open(os.path.join(index_dir, 'index-by-difficulty.md'), 'w', encoding='utf-8') as f:
         f.write(difficulty_index)
-    print("✅ 已生成按難度分類的索引")
+    print("✅ Generated index by difficulty")
     
-    # 按標籤索引
+    # Index by tags
     tags_index = generate_index_by_tags(stats)
     if tags_index:
         with open(os.path.join(index_dir, 'index-by-tags.md'), 'w', encoding='utf-8') as f:
             f.write(tags_index)
-        print("✅ 已生成按標籤分類的索引")
+        print("✅ Generated index by tags")
 
 
 if __name__ == "__main__":

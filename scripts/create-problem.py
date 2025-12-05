@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-快速創建新 LeetCode 題目檔案的工具
-基於新的專案結構：以題目為中心的組織方式
+Quick LeetCode problem file creator
+Based on new project structure: problem-centric organization
 """
 
 import os
@@ -12,44 +12,49 @@ from datetime import datetime
 
 
 def kebab_case(text):
-    """將文本轉換為 kebab-case 格式"""
-    # 移除特殊字符，保留字母、數字、空格、連字符
+    """Convert text to kebab-case format"""
+    # Remove special characters, keep letters, numbers, spaces, hyphens
     text = re.sub(r'[^\w\s-]', '', text.lower())
-    # 將空格和多個連字符替換為單個連字符
+    # Replace spaces and multiple hyphens with single hyphen
     text = re.sub(r'[-\s]+', '-', text)
-    # 移除開頭和結尾的連字符
+    # Remove leading and trailing hyphens
     return text.strip('-')
 
 
-def create_problem_structure(problem_id, title, difficulty, languages=['python']):
-    """創建新題目的完整結構"""
+def create_problem_structure(problem_id, title, difficulty, languages=['python'], topics=None):
+    """Create complete structure for new problem"""
     
-    # 格式化題目編號 (4位數)
+    # Format problem ID (5 digits)
     problem_id_str = f"{int(problem_id):05d}"
     
-    # 轉換標題為 kebab-case
+    # Convert title to kebab-case
     title_slug = kebab_case(title)
-    url_slug = title_slug  # URL slug 通常與 kebab-case 標題相同
+    url_slug = title_slug  # URL slug usually matches kebab-case title
     
-    # 創建題目資料夾
+    # Create problem folder
     project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     problem_dir = os.path.join(project_root, 'problems', f"{problem_id_str}-{title_slug}")
     
     if os.path.exists(problem_dir):
-        print(f"❌ 錯誤：題目資料夾已存在: {problem_dir}")
+        print(f"❌ Error: Problem folder already exists: {problem_dir}")
         return
     
     os.makedirs(problem_dir)
-    print(f"✅ 創建題目資料夾: {problem_dir}")
+    print(f"✅ Created problem folder: {problem_dir}")
     
-    # 不再創建語言子資料夾，直接在根目錄創建語言特定檔案
+    # No longer creating language subfolders, create language-specific files in root
     
-    # 創建 README.md（使用 YAML frontmatter 整合所有資訊）
+    # Create README.md (using YAML frontmatter to integrate all information)
     difficulty_emoji = {'easy': '🟢', 'medium': '🟡', 'hard': '🔴'}
     difficulty_display = f"{difficulty_emoji.get(difficulty.lower(), '❓')} **{difficulty.title()}**"
     
-    # 預設標籤和相關題目
-    default_tags = ["待填入標籤1", "待填入標籤2"]
+    # Use provided topics or default values
+    if topics and len(topics) > 0:
+        default_topics = topics
+        default_tags = topics  # tags use same topics
+    else:
+        default_topics = ["Topic 1", "Topic 2"]
+        default_tags = ["Tag 1", "Tag 2"]
     tags_display = ' '.join([f"`{tag}`" for tag in default_tags])
     
     date_str = datetime.now().strftime('%Y-%m-%d')
@@ -60,7 +65,7 @@ title: "{title}"
 url_slug: "{url_slug}"
 difficulty: "{difficulty.lower()}"
 tags: {default_tags}
-topics: ["待填入主題1", "待填入主題2"]
+topics: {default_topics}
 date_created: "{date_str}"
 date_solved: "{date_str}"
 languages: {languages}
@@ -100,24 +105,30 @@ notes: "待填入解題心得和筆記"
     readme_file = os.path.join(problem_dir, 'README.md')
     with open(readme_file, 'w', encoding='utf-8') as f:
         f.write(readme_content)
-    print(f"✅ 創建README檔案: {readme_file}")
+    print(f"✅ Created README file: {readme_file}")
     
-    # 為每種語言創建解答檔案
+    # Create solution files for each language
     for lang in languages:
         if lang == 'python':
-            create_python_solution(problem_dir, problem_id, title, url_slug)
+            create_python_solution(problem_dir, problem_id, title, url_slug, default_topics)
         elif lang == 'cpp':
-            create_cpp_solution(problem_dir, problem_id, title, url_slug)
+            create_cpp_solution(problem_dir, problem_id, title, url_slug, default_topics)
         elif lang == 'javascript':
-            create_js_solution(problem_dir, problem_id, title, url_slug)
+            create_js_solution(problem_dir, problem_id, title, url_slug, default_topics)
     
-    print(f"\n🎉 題目 {problem_id}. {title} 創建完成！")
-    print(f"📁 資料夾: {problem_dir}")
+    print(f"\n🎉 Problem {problem_id}. {title} created successfully!")
+    print(f"📁 Folder: {problem_dir}")
 
 
-def create_python_solution(problem_dir, problem_id, title, url_slug):
-    """創建 Python 解答檔案"""
-    # 直接在題目根目錄創建 solution-python.py
+def create_python_solution(problem_dir, problem_id, title, url_slug, topics=None):
+    """Create Python solution file"""
+    # Create solution-python.py directly in problem root directory
+    
+    # Format topics
+    if topics and len(topics) > 0:
+        tags_str = ', '.join(topics)
+    else:
+        tags_str = 'To be filled'
     
     solution_content = f'''"""
 {problem_id}. {title}
@@ -126,7 +137,7 @@ https://leetcode.com/problems/{url_slug}/
 Time Complexity: O(?)
 Space Complexity: O(?)
 
-Tags: [待填入標籤]
+Tags: {tags_str}
 """
 
 class Solution:
@@ -159,12 +170,18 @@ if __name__ == "__main__":
     solution_file = os.path.join(problem_dir, 'solution-python.py')
     with open(solution_file, 'w', encoding='utf-8') as f:
         f.write(solution_content)
-    print(f"✅ 創建Python解答: {solution_file}")
+    print(f"✅ Created Python solution: {solution_file}")
 
 
-def create_cpp_solution(problem_dir, problem_id, title, url_slug):
-    """創建 C++ 解答檔案"""
+def create_cpp_solution(problem_dir, problem_id, title, url_slug, topics=None):
+    """Create C++ solution file"""
     cpp_dir = os.path.join(problem_dir, 'cpp')
+    
+    # Format topics
+    if topics and len(topics) > 0:
+        tags_str = ', '.join(topics)
+    else:
+        tags_str = 'To be filled'
     
     solution_content = f'''/*
 {problem_id}. {title}
@@ -173,7 +190,7 @@ https://leetcode.com/problems/{url_slug}/
 Time Complexity: O(?)
 Space Complexity: O(?)
 
-Tags: [待填入標籤]
+Tags: {tags_str}
 */
 
 #include <vector>
@@ -203,12 +220,18 @@ int main() {{
     solution_file = os.path.join(cpp_dir, 'solution.cpp')
     with open(solution_file, 'w', encoding='utf-8') as f:
         f.write(solution_content)
-    print(f"✅ 創建C++解答: {solution_file}")
+    print(f"✅ Created C++ solution: {solution_file}")
 
 
-def create_js_solution(problem_dir, problem_id, title, url_slug):
-    """創建 JavaScript 解答檔案"""
+def create_js_solution(problem_dir, problem_id, title, url_slug, topics=None):
+    """Create JavaScript solution file"""
     js_dir = os.path.join(problem_dir, 'javascript')
+    
+    # Format topics
+    if topics and len(topics) > 0:
+        tags_str = ', '.join(topics)
+    else:
+        tags_str = 'To be filled'
     
     solution_content = f'''/**
  * {problem_id}. {title}
@@ -217,7 +240,7 @@ def create_js_solution(problem_dir, problem_id, title, url_slug):
  * Time Complexity: O(?)
  * Space Complexity: O(?)
  * 
- * Tags: [待填入標籤]
+ * Tags: {tags_str}
  */
 
 /**
@@ -253,35 +276,48 @@ testSolution();
     solution_file = os.path.join(js_dir, 'solution.js')
     with open(solution_file, 'w', encoding='utf-8') as f:
         f.write(solution_content)
-    print(f"✅ 創建JavaScript解答: {solution_file}")
+    print(f"✅ Created JavaScript solution: {solution_file}")
 
 
 def main():
-    """主函數"""
+    """Main function"""
     if len(sys.argv) < 4:
-        print("使用方法: python create-problem.py <題號> <題目標題> <難度> [語言1,語言2,...]")
-        print("範例: python create-problem.py 20 'Valid Parentheses' easy python,cpp")
-        print("支援的語言: python, cpp, javascript")
+        print("Usage: python create-problem.py <problem_id> <title> <difficulty> [lang1,lang2,...] [--topics topic1,topic2,...]")
+        print("Example: python create-problem.py 20 'Valid Parentheses' easy python,cpp")
+        print("Example (with topics): python create-problem.py 20 'Valid Parentheses' easy --topics Array,Hash Table")
+        print("Supported languages: python, cpp, javascript")
         sys.exit(1)
     
     problem_id = sys.argv[1]
     title = sys.argv[2]
     difficulty = sys.argv[3]
     
-    # 解析語言參數
-    languages = ['python']  # 預設
-    if len(sys.argv) > 4:
-        languages = [lang.strip() for lang in sys.argv[4].split(',')]
+    # Parse language parameters and topics
+    languages = ['python']  # Default
+    topics = None
     
-    # 驗證語言
+    i = 4
+    while i < len(sys.argv):
+        if sys.argv[i] == '--topics':
+            if i + 1 < len(sys.argv):
+                topics = [t.strip() for t in sys.argv[i + 1].split(',')]
+                i += 2
+            else:
+                print("❌ --topics parameter requires a list of tags")
+                sys.exit(1)
+        else:
+            languages = [lang.strip() for lang in sys.argv[i].split(',')]
+            i += 1
+    
+    # Validate languages
     supported_languages = {'python', 'cpp', 'javascript'}
     invalid_languages = set(languages) - supported_languages
     if invalid_languages:
-        print(f"❌ 不支援的語言: {', '.join(invalid_languages)}")
-        print(f"支援的語言: {', '.join(supported_languages)}")
+        print(f"❌ Unsupported languages: {', '.join(invalid_languages)}")
+        print(f"Supported languages: {', '.join(supported_languages)}")
         sys.exit(1)
     
-    create_problem_structure(problem_id, title, difficulty, languages)
+    create_problem_structure(problem_id, title, difficulty, languages, topics)
 
 
 if __name__ == "__main__":

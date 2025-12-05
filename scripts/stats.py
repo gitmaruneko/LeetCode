@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-LeetCode 練習統計工具
-自動統計已完成的題目數量和進度
+LeetCode Practice Statistics Tool
+Automatically count completed problems and progress
 """
 
 import os
@@ -10,7 +10,7 @@ from collections import defaultdict
 
 
 def scan_problems(problems_dir):
-    """掃描 problems 目錄，統計已完成的題目"""
+    """Scan problems directory, count completed problems"""
     stats = {
         'easy': 0,
         'medium': 0,
@@ -19,14 +19,14 @@ def scan_problems(problems_dir):
         'problems': []
     }
     
-    # 掃描各難度資料夾
+    # Scan difficulty folders
     for difficulty in ['easy', 'medium', 'hard']:
         diff_path = os.path.join(problems_dir, difficulty)
         if not os.path.exists(diff_path):
             continue
             
         files = os.listdir(diff_path)
-        # 只計算程式碼檔案（不包含筆記檔）
+        # Only count code files (exclude note files)
         code_files = [f for f in files if not f.endswith('-notes.md')]
         
         stats[difficulty] = len(set(f.split('-')[0] for f in code_files if '-' in f))
@@ -36,14 +36,14 @@ def scan_problems(problems_dir):
 
 
 def update_readme(readme_path, stats):
-    """更新 README.md 中的統計資訊"""
+    """Update statistics in README.md"""
     if not os.path.exists(readme_path):
         return
     
     with open(readme_path, 'r', encoding='utf-8') as f:
         content = f.read()
     
-    # 更新統計表格
+    # Update statistics table
     table_pattern = r'(\| 難度 \| 已解決 \| 總題數 \|\n\|------|--------|--------\|\n)(\| Easy \| )\d+(\| \d+ \|\n)(\| Medium \| )\d+(\| \d+ \|\n)(\| Hard \| )\d+(\| \d+ \|\n)(\| \*\*總計\*\* \| \*\*)\d+(\*\* \| \*\*)\d+(\*\* \|)'
     
     replacement = f'\\g<1>\\g<2>{stats["easy"]}\\g<3>\\g<4>{stats["medium"]}\\g<5>\\g<6>{stats["hard"]}\\g<7>\\g<8>{stats["total"]}\\g<9>{stats["total"]}\\g<10>'
@@ -55,24 +55,24 @@ def update_readme(readme_path, stats):
 
 
 def main():
-    """主函數"""
+    """Main function"""
     project_root = os.path.dirname(os.path.abspath(__file__))
     problems_dir = os.path.join(project_root, 'problems')
     readme_path = os.path.join(project_root, 'README.md')
     
-    # 統計題目
+    # Count problems
     stats = scan_problems(problems_dir)
     
-    # 顯示統計結果
-    print("=== LeetCode 練習統計 ===")
-    print(f"簡單題目: {stats['easy']}")
-    print(f"中等題目: {stats['medium']}")
-    print(f"困難題目: {stats['hard']}")
-    print(f"總計: {stats['total']}")
+    # Display statistics
+    print("=== LeetCode Practice Statistics ===")
+    print(f"Easy: {stats['easy']}")
+    print(f"Medium: {stats['medium']}")
+    print(f"Hard: {stats['hard']}")
+    print(f"Total: {stats['total']}")
     
-    # 更新 README
+    # Update README
     update_readme(readme_path, stats)
-    print("\nREADME.md 已更新！")
+    print("\nREADME.md updated!")
 
 
 if __name__ == "__main__":

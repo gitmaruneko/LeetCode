@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-將現有題目的 python/solution.py 遷移到根目錄並重命名為 solution-python.py
-移除空的 python/ 資料夾
+Migrate existing problem's python/solution.py to root directory and rename to solution-python.py
+Remove empty python/ folders
 """
 
 import os
@@ -10,22 +10,22 @@ from pathlib import Path
 
 
 def migrate_problem_structure(problem_dir):
-    """遷移單個題目的結構"""
+    """Migrate structure of a single problem"""
     problem_path = Path(problem_dir)
     python_dir = problem_path / 'python'
     
     if not python_dir.exists():
-        return False, "沒有 python 資料夾"
+        return False, "No python folder"
     
     moved_files = []
     
-    # 遷移所有 Python 檔案
+    # Migrate all Python files
     for py_file in python_dir.glob('*.py'):
         if py_file.name == 'solution.py':
-            # 主要解答檔案重命名為 solution-python.py
+            # Rename main solution file to solution-python.py
             new_name = 'solution-python.py'
         else:
-            # 其他檔案保持原名但加上 -python 後綴
+            # Keep other files with -python suffix
             name_parts = py_file.stem, py_file.suffix
             new_name = f"{name_parts[0]}-python{name_parts[1]}"
         
@@ -33,21 +33,21 @@ def migrate_problem_structure(problem_dir):
         shutil.move(str(py_file), str(new_path))
         moved_files.append(f"{py_file.name} -> {new_name}")
     
-    # 移除空的 python 資料夾
+    # Remove empty python folder
     try:
         python_dir.rmdir()
-        return True, f"遷移檔案: {', '.join(moved_files)}"
+        return True, f"Migrated files: {', '.join(moved_files)}"
     except OSError:
-        return False, f"python 資料夾不為空，已遷移檔案: {', '.join(moved_files)}"
+        return False, f"python folder not empty, migrated files: {', '.join(moved_files)}"
 
 
 def main():
-    """遷移所有題目"""
+    """Migrate all problems"""
     project_root = Path(__file__).parent.parent
     problems_dir = project_root / 'problems'
     
     if not problems_dir.exists():
-        print("❌ problems 資料夾不存在")
+        print("❌ problems folder does not exist")
         return
     
     migrated_count = 0
@@ -63,12 +63,12 @@ def main():
                 print(f"⚠️  {problem_folder.name}: {message}")
                 skipped_count += 1
     
-    print(f"\n🎉 遷移完成！")
-    print(f"✅ 成功遷移: {migrated_count} 個題目")
-    print(f"⚠️  跳過: {skipped_count} 個題目")
+    print(f"\n🎉 Migration complete!")
+    print(f"✅ Successfully migrated: {migrated_count} problems")
+    print(f"⚠️  Skipped: {skipped_count} problems")
     
-    # 更新專案結構說明
-    print("\n📝 新的檔案結構:")
+    # Update project structure description
+    print("\n📝 New file structure:")
     print("problems/")
     print("├── 00001-two-sum/")
     print("│   ├── README.md")
