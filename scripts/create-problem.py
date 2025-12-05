@@ -65,11 +65,6 @@ date_created: "{date_str}"
 date_solved: "{date_str}"
 languages: {languages}
 notes: "待填入解題心得和筆記"
-related_problems:
-  - id: 0
-    title: "相關題目1"
-  - id: 0
-    title: "相關題目2"
 ---
 
 # {problem_id}. {title}
@@ -83,30 +78,19 @@ related_problems:
 
 ## 解題思路
 
-### 方法一：[解法名稱]
+### 方法一：
 
 [待填入解題思路]
 
-**算法步驟：**
 1. [步驟1]
 2. [步驟2]
 3. [步驟3]
 
 ## 複雜度分析
 
-### 方法一
+### 方法
 - **時間複雜度**：O(?)
 - **空間複雜度**：O(?)
-
-## 相關標籤
-
-- `待填入標籤1`
-- `待填入標籤2`
-
-## 相關題目
-
-- [相關題目1](../相關連結1)
-- [相關題目2](../相關連結2)
 
 ## 學習筆記
 
@@ -147,15 +131,7 @@ Tags: [待填入標籤]
 
 class Solution:
     def solve(self, param):
-        """
-        [待填入解題思路描述]
-        
-        Args:
-            param: [參數描述]
-            
-        Returns:
-            [返回值描述]
-        """
+
         pass
 
 
