@@ -1,88 +1,88 @@
-# Python LeetCode 練習指南
+# Python LeetCode Practice Guide
 
-## 🐍 為什麼選擇 Python？
+## 🐍 Why Choose Python?
 
-- **語法簡潔**：專注於算法邏輯而非語法細節
-- **豐富的內建函數**：`len()`, `sorted()`, `max()`, `min()` 等
-- **強大的資料结構**：`list`, `dict`, `set`, `deque` 等
-- **面試友好**：大多數公司接受 Python 解題
+- **Concise Syntax**: Focus on algorithm logic rather than syntax details
+- **Rich Built-in Functions**: `len()`, `sorted()`, `max()`, `min()`, etc.
+- **Powerful Data Structures**: `list`, `dict`, `set`, `deque`, etc.
+- **Interview Friendly**: Most companies accept Python solutions
 
-## 常用 Python 技巧
+## Common Python Techniques
 
-### 1. 列表操作
+### 1. List Operations
 ```python
-# 列表推導式
+# List comprehension
 squares = [x**2 for x in range(10)]
 
-# 切片操作
+# Slicing
 reversed_list = nums[::-1]
 
-# 雙指針
+# Two pointers
 left, right = 0, len(nums) - 1
 ```
 
-### 2. 字典與集合
+### 2. Dictionary & Set
 ```python
-# 計數器
+# Counter
 from collections import Counter
 count = Counter(nums)
 
-# 集合操作
+# Set operations
 seen = set()
 if num in seen:
     return True
 seen.add(num)
 ```
 
-### 3. 堆疊與佇列
+### 3. Stack & Queue
 ```python
-# 堆疊（使用 list）
+# Stack (using list)
 stack = []
 stack.append(item)  # push
 item = stack.pop()  # pop
 
-# 佇列（使用 deque）
+# Queue (using deque)
 from collections import deque
 queue = deque()
 queue.append(item)     # enqueue
 item = queue.popleft() # dequeue
 ```
 
-### 4. 排序與搜尋
+### 4. Sorting & Searching
 ```python
-# 自定義排序
-nums.sort(key=lambda x: x[1])  # 按第二個元素排序
+# Custom sorting
+nums.sort(key=lambda x: x[1])  # Sort by second element
 
-# 二分搜尋
+# Binary search
 import bisect
 index = bisect.bisect_left(nums, target)
 ```
 
-## 解題模板
+## Solution Templates
 
-### 基本模板
+### Basic Template
 ```python
 class Solution:
     def problemName(self, param):
         """
-        解題思路：
-        1. [步驟1]
-        2. [步驟2]
-        3. [步驟3]
+        Approach:
+        1. [Step 1]
+        2. [Step 2]
+        3. [Step 3]
         
         Time: O(?)
         Space: O(?)
         """
-        # 實現邏輯
+        # Implementation
         pass
 ```
 
-### 測試模板
+### Test Template
 ```python
 def test_solution():
     solution = Solution()
     
-    # 測試案例
+    # Test cases
     test_cases = [
         (input1, expected1),
         (input2, expected2),
@@ -96,49 +96,49 @@ def test_solution():
     print("All tests passed! ✅")
 ```
 
-## 練習建議
+## Practice Suggestions
 
-### 新手階段（Easy 題目）
-1. **陣列與字串**：Two Sum, Valid Palindrome
-2. **鏈表**：Reverse Linked List, Merge Two Lists
-3. **樹**：Maximum Depth, Same Tree
+### Beginner Stage (Easy Problems)
+1. **Array & String**: Two Sum, Valid Palindrome
+2. **Linked List**: Reverse Linked List, Merge Two Lists
+3. **Tree**: Maximum Depth, Same Tree
 
-### 進階階段（Medium 題目）
-1. **動態規劃**：Climbing Stairs, House Robber
-2. **圖論**：Number of Islands, Course Schedule
-3. **回溯**：Letter Combinations, Subsets
+### Intermediate Stage (Medium Problems)
+1. **Dynamic Programming**: Climbing Stairs, House Robber
+2. **Graph**: Number of Islands, Course Schedule
+3. **Backtracking**: Letter Combinations, Subsets
 
-### 高級階段（Hard 題目）
-1. **複雜 DP**：Edit Distance, Regular Expression
-2. **高級資料結構**：LRU Cache, Sliding Window Maximum
+### Advanced Stage (Hard Problems)
+1. **Complex DP**: Edit Distance, Regular Expression
+2. **Advanced Data Structures**: LRU Cache, Sliding Window Maximum
 
-## 常見陷阱
+## Common Pitfalls
 
-1. **整數溢出**：Python 自動處理大整數
-2. **索引範圍**：注意 `range(len(arr))` 的邊界
-3. **淺拷貝 vs 深拷貝**：使用 `copy.deepcopy()` 時要小心
-4. **字典的 KeyError**：使用 `dict.get(key, default)` 更安全
+1. **Integer Overflow**: Python automatically handles large integers
+2. **Index Range**: Be careful with `range(len(arr))` boundaries
+3. **Shallow vs Deep Copy**: Use `copy.deepcopy()` carefully
+4. **Dictionary KeyError**: Use `dict.get(key, default)` for safety
 
-## 程式碼風格
+## Code Style
 
-- 使用 **snake_case** 命名變數和函數
-- 適當的註釋說明算法思路
-- 保持函數簡潔，單一職責
-- 使用有意義的變數名
+- Use **snake_case** for variable and function names
+- Add appropriate comments explaining algorithm logic
+- Keep functions concise with single responsibility
+- Use meaningful variable names
 
-## 快速創建新題目
+## Quick Problem Creation
 
 ```bash
-python scripts/create-problem.py <題號> "<題目名稱>" <難度>
+python scripts/create-problem.py <problem_id> "<problem_title>" <difficulty>
 ```
 
-範例：
+Example:
 ```bash
 python scripts/create-problem.py 21 "Merge Two Sorted Lists" easy
 ```
 
-這將自動創建：
-- `problems/00021-merge-two-sorted-lists/README.md` (包含 YAML frontmatter)
+This will automatically create:
+- `problems/00021-merge-two-sorted-lists/README.md` (with YAML frontmatter)
 - `problems/00021-merge-two-sorted-lists/solution-python.py`
 
-極簡結構，專注解題！ 🚀
+Minimal structure, focus on solving! 🚀

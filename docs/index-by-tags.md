@@ -1,26 +1,26 @@
-# LeetCode 題目索引 - 按標籤分類
+# LeetCode Problem Index - By Tags
 
-## string (1 題)
+## string (1 problem)
 
-| 題號 | 題目 | 難度 | 語言 |
+| ID | Problem | Difficulty | Languages |
 |------|------|------|------|
 | 20 | [Valid Parentheses](./problems/00020-valid-parentheses) | ✅ Easy | python |
 
-## stack (1 題)
+## stack (1 problem)
 
-| 題號 | 題目 | 難度 | 語言 |
+| ID | Problem | Difficulty | Languages |
 |------|------|------|------|
 | 20 | [Valid Parentheses](./problems/00020-valid-parentheses) | ✅ Easy | python |
 
-## list (1 題)
+## list (1 problem)
 
-| 題號 | 題目 | 難度 | 語言 |
+| ID | Problem | Difficulty | Languages |
 |------|------|------|------|
 | 1408 | [Running Sum of 1d Array](./problems/01408-running-sum-of-1d-array) | ✅ Easy | python |
 
-## sum (1 題)
+## sum (1 problem)
 
-| 題號 | 題目 | 難度 | 語言 |
+| ID | Problem | Difficulty | Languages |
 |------|------|------|------|
 | 1408 | [Running Sum of 1d Array](./problems/01408-running-sum-of-1d-array) | ✅ Easy | python |
 
