@@ -11,19 +11,19 @@ Tags: {{tags}}
 class Solution:
     def solve(self, param):
         """
-        解題思路描述
+        Approach description
         
         Args:
-            param: 參數描述
+            param: Parameter description
             
         Returns:
-            返回值描述
+            Return value description
         """
         pass
 
 
 def test_solution():
-    """測試函數"""
+    """Test function"""
     solution = Solution()
     
     test_cases = [

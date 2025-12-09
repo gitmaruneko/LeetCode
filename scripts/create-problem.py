@@ -69,37 +69,37 @@ topics: {default_topics}
 date_created: "{date_str}"
 date_solved: "{date_str}"
 languages: {languages}
-notes: "待填入解題心得和筆記"
+notes: "Add notes here"
 ---
 
 # {problem_id}. {title}
 
-> **題目資訊**  
+> **Problem Information**  
 > 🔗 [LeetCode](https://leetcode.com/problems/{url_slug}/) | 🎯 {difficulty_display} | 🏷️ {tags_display} | 📅 {date_str}
 
-## 題目描述
+## Problem Description
 
-[待填入題目描述]
+[Add problem description here]
 
-## 解題思路
+## Approach
 
-### 方法一：
+### Method 1:
 
-[待填入解題思路]
+[Add approach description here]
 
-1. [步驟1]
-2. [步驟2]
-3. [步驟3]
+1. [Step 1]
+2. [Step 2]
+3. [Step 3]
 
-## 複雜度分析
+## Complexity Analysis
 
-### 方法
-- **時間複雜度**：O(?)
-- **空間複雜度**：O(?)
+### Method
+- **Time Complexity**: O(?)
+- **Space Complexity**: O(?)
 
-## 學習筆記
+## Notes
 
-待填入解題心得和筆記
+Add solution notes and insights here
 """
     
     readme_file = os.path.join(problem_dir, 'README.md')
@@ -147,12 +147,11 @@ class Solution:
 
 
 def test_solution():
-    """測試函數"""
     solution = Solution()
     
     test_cases = [
         # (input, expected_output),
-        # 範例：(example_input, expected_result),
+        # Example: (example_input, expected_result),
     ]
     
     for i, (input_data, expected) in enumerate(test_cases):
@@ -199,18 +198,18 @@ using namespace std;
 
 class Solution {{
 public:
-    // [待填入返回類型] solve([待填入參數類型] param) {{
-    //     // [待填入解題思路]
-    //     return [待填入返回值];
+    // [Return type] solve([Parameter type] param) {{
+    //     // [Solution logic]
+    //     return [Return value];
     // }}
 }};
 
-// 測試函數
+
 int main() {{
     Solution solution;
     
-    // 測試用例
-    // [待填入測試用例]
+    // Test cases
+    // [Add test cases here]
     
     cout << "All tests passed!" << endl;
     return 0;
@@ -244,19 +243,18 @@ def create_js_solution(problem_dir, problem_id, title, url_slug, topics=None):
  */
 
 /**
- * [待填入解題思路描述]
- * @param {{[參數類型]}} param [參數描述]
- * @return {{[返回類型]}} [返回值描述]
+ * [Solution approach description]
+ * @param {{[Parameter type]}} param [Parameter description]
+ * @return {{[Return type]}} [Return value description]
  */
 var solve = function(param) {{
-    // [待填入解題邏輯]
+    // [Solution logic]
 }};
 
-// 測試函數
 function testSolution() {{
     const testCases = [
         // [input, expected_output],
-        // 範例：[example_input, expected_result],
+        // Example: [example_input, expected_result],
     ];
     
     testCases.forEach((testCase, i) => {{
@@ -269,7 +267,7 @@ function testSolution() {{
     console.log("All tests passed!");
 }}
 
-// 執行測試
+// Run tests
 testSolution();
 '''
     
