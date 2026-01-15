@@ -69,7 +69,7 @@ topics: {default_topics}
 date_created: "{date_str}"
 date_solved: "{date_str}"
 languages: {languages}
-notes: "Add notes here"
+notes: ""
 ---
 
 # {problem_id}. {title}
@@ -79,17 +79,15 @@ notes: "Add notes here"
 
 ## Problem Description
 
-[Add problem description here]
+
 
 ## Approach
 
 ### Method 1:
 
-[Add approach description here]
-
-1. [Step 1]
-2. [Step 2]
-3. [Step 3]
+1. 
+2. 
+3. 
 
 ## Complexity Analysis
 

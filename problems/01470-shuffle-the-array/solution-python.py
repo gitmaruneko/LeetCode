@@ -2,8 +2,8 @@
 1470. Shuffle the Array
 https://leetcode.com/problems/shuffle-the-array/
 
-Time Complexity: O(?)
-Space Complexity: O(?)
+Time Complexity: O(n)
+Space Complexity: O(n)
 
 Tags: Array
 """
