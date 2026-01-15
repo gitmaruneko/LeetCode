@@ -80,15 +80,16 @@ python scripts/update-stats.py
 
 | 難度 | 已解題數 |
 |------|----------|
-| 🟢 Easy | 2 |
+| 🟢 Easy | 3 |
 | 🟡 Medium | 0 |
 | 🔴 Hard | 0 |
-| **總計** | **2** |
+| **總計** | **3** |
 
 
 ## 最近練習
 
 | 題號 | 題目 | 難度 | 完成日期 |
 |------|------|------|----------|
+| 1470 | [Shuffle the Array](./problems/01470-shuffle-the-array) | 🟢 Easy | 2025-12-09 |
 | 1408 | [Running Sum of 1d Array](./problems/01408-running-sum-of-1d-array) | 🟢 Easy | 2025-12-05 |
 | 20 | [Valid Parentheses](./problems/00020-valid-parentheses) | 🟢 Easy | 2025-09-23 |
