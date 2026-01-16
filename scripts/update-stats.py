@@ -8,8 +8,26 @@ Automatically count completed problems and progress
 import os
 import yaml
 import re
+import subprocess
 from collections import defaultdict, Counter
 from datetime import datetime
+
+
+def get_git_commit_date(folder_path):
+    """Get the last commit date for a folder using git"""
+    try:
+        result = subprocess.run(
+            ['git', 'log', '-1', '--format=%cd', '--date=short', '--', folder_path],
+            cwd=os.path.dirname(folder_path),
+            capture_output=True,
+            text=True,
+            timeout=5
+        )
+        if result.returncode == 0 and result.stdout.strip():
+            return result.stdout.strip()
+    except Exception:
+        pass
+    return None
 
 
 def parse_frontmatter(readme_content):
@@ -65,13 +83,16 @@ def scan_problems(problems_dir):
             if not meta_data:
                 continue
             
+            # Get commit date for this problem folder
+            commit_date = get_git_commit_date(problem_path)
+            
             problem_info = {
                 'id': meta_data.get('id', 0),
                 'title': meta_data.get('title', ''),
                 'difficulty': meta_data.get('difficulty', 'unknown'),
                 'languages': meta_data.get('languages', []),
                 'tags': meta_data.get('tags', []),
-                'date_solved': meta_data.get('date_solved', ''),
+                'date_solved': commit_date or meta_data.get('date_solved', ''),
                 'folder': problem_dir
             }
             
@@ -177,33 +198,33 @@ def update_readme(readme_path, stats):
         content = f.read()
     
     # Update statistics table - simplified version
-    stats_section = f"""## 統計資訊
+    stats_section = f"""## Statistics
 
-| 難度 | 已解題數 |
+| Difficulty | Solved |
 |------|----------|
 | 🟢 Easy | {stats["easy"]} |
 | 🟡 Medium | {stats["medium"]} |
 | 🔴 Hard | {stats["hard"]} |
-| **總計** | **{stats["total"]}** |"""
+| **Total** | **{stats["total"]}** |"""
 
-    # 替換統計資訊區塊
-    stats_pattern = r'## 統計資訊.*?(?=\n## [^#]|\n\n## [^#]|\Z)'
+    # Replace statistics section
+    stats_pattern = r'## (統計資訊|Statistics).*?(?=\n## [^#]|\n\n## [^#]|\Z)'
     new_content = re.sub(stats_pattern, stats_section, content, flags=re.DOTALL)
     
-    # 更新最近練習表格 - 只顯示最近 3 題
+    # Update recent practice table - show only latest 3 problems
     if stats['recent_problems']:
-        recent_section = "\n\n## 最近練習\n\n"
-        recent_section += "| 題號 | 題目 | 難度 | 完成日期 |\n"
+        recent_section = "\n\n## Recent Practice\n\n"
+        recent_section += "| ID | Problem | Difficulty | Completed Date |\n"
         recent_section += "|------|------|------|----------|\n"
         
-        for problem in stats['recent_problems'][:3]:  # 只顯示最近3個
+        for problem in stats['recent_problems'][:3]:  # Show only latest 3
             difficulty_emoji = {'easy': '🟢', 'medium': '🟡', 'hard': '🔴'}.get(problem['difficulty'], '❓')
             folder_link = f"./problems/{problem['folder']}"
             
             recent_section += f"| {problem['id']} | [{problem['title']}]({folder_link}) | {difficulty_emoji} {problem['difficulty'].title()} | {problem['date_solved']} |\n"
         
-        # 替換最近練習區塊
-        recent_pattern = r'\n## 最近練習.*?(?=\n## [^#]|\Z)'
+        # Replace recent practice section
+        recent_pattern = r'\n## (最近練習|Recent Practice).*?(?=\n## [^#]|\Z)'
         new_content = re.sub(recent_pattern, recent_section, new_content, flags=re.DOTALL)
     
     with open(readme_path, 'w', encoding='utf-8') as f:
