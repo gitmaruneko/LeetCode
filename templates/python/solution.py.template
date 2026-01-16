@@ -23,10 +23,23 @@ class Solution:
 
 
 def test_solution():
-    """Test function"""
+    """
+    Test function
+    
+    Common test case formats:
+    - Single input:      (input_value, expected_output)
+    - Multiple inputs:   ((param1, param2), expected_output)
+    - List + value:      (([1,2,3], val), expected)
+    
+    Examples:
+        ([1,2,3], 6)           # Single list input
+        (([3,2,2,3], 3), 2)    # List and value
+        ((5, 3), 8)            # Two numbers
+    """
     solution = Solution()
     
     test_cases = [
+        # TODO: Copy test cases from LeetCode examples
         # (input, expected_output),
     ]
     

@@ -77,13 +77,13 @@ notes: ""
 > **Problem Information**  
 > 🔗 [LeetCode](https://leetcode.com/problems/{url_slug}/) | 🎯 {difficulty_display} | 🏷️ {tags_display} | 📅 {date_str}
 
-## Problem Description
+## Intuition 
 
 
 
 ## Approach
 
-### Method 1:
+### Method:
 
 1. 
 2. 
@@ -140,16 +140,38 @@ Tags: {tags_str}
 
 class Solution:
     def solve(self, param):
-
+        """
+        TODO: Implement solution
+        
+        Args:
+            param: Input parameter(s)
+            
+        Returns:
+            Solution result
+        """
         pass
 
 
 def test_solution():
+    """
+    Test cases for the solution.
+    
+    Format examples:
+    - Single parameter: (input_value, expected_output)
+    - Multiple parameters: ((param1, param2), expected_output)
+    - List modification: ((list_input, value), expected_output)
+    
+    Example formats:
+        Single input:    ([1,2,3], 6)
+        Two inputs:      (([1,2,3], 2), True)
+        Three inputs:    ((nums, target, k), result)
+    """
     solution = Solution()
     
     test_cases = [
-        # (input, expected_output),
-        # Example: (example_input, expected_result),
+        # TODO: Add test cases from LeetCode examples
+        # Format: (input, expected_output)
+        # Example: ([1,2,3,4], 10)
     ]
     
     for i, (input_data, expected) in enumerate(test_cases):
