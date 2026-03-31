@@ -76,20 +76,20 @@ python scripts/update-stats.py
 - 📊 [按難度分類索引](./docs/index-by-difficulty.md) - 題目難度分類
 - 🏷️ [按標籤分類索引](./docs/index-by-tags.md) - 題目標籤分類
 
-## 統計資訊
+## Statistics
 
-| 難度 | 已解題數 |
+| Difficulty | Solved |
 |------|----------|
-| 🟢 Easy | 4 |
+| 🟢 Easy | 5 |
 | 🟡 Medium | 0 |
 | 🔴 Hard | 0 |
-| **總計** | **4** |
+| **Total** | **5** |
 
 
-## 最近練習
+## Recent Practice
 
-| 題號 | 題目 | 難度 | 完成日期 |
+| ID | Problem | Difficulty | Completed Date |
 |------|------|------|----------|
-| 27 | [Remove Element](./problems/00027-remove-element) | 🟢 Easy | 2026-01-15 |
-| 1470 | [Shuffle the Array](./problems/01470-shuffle-the-array) | 🟢 Easy | 2025-12-09 |
-| 1408 | [Running Sum of 1d Array](./problems/01408-running-sum-of-1d-array) | 🟢 Easy | 2025-12-05 |
+| 20 | [Valid Parentheses](./problems/00020-valid-parentheses) | 🟢 Easy | 2026-03-31 |
+| 26 | [Remove Duplicates from Sorted Array](./problems/00026-remove-duplicates-from-sorted-array) | 🟢 Easy | 2026-03-31 |
+| 27 | [Remove Element](./problems/00027-remove-element) | 🟢 Easy | 2026-03-31 |
