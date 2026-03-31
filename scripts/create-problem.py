@@ -175,7 +175,10 @@ def test_solution():
     ]
     
     for i, (input_data, expected) in enumerate(test_cases):
-        result = solution.solve(input_data)
+        if isinstance(input_data, tuple):
+            result = solution.solve(*input_data)
+        else:
+            result = solution.solve(input_data)
         print(f"Test {{i+1}}: input={{input_data}} -> {{result}} (Expected: {{expected}})")
         assert result == expected, f"Test {{i+1}} failed"
     
