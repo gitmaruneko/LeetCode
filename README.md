@@ -90,6 +90,6 @@ python scripts/update-stats.py
 
 | ID | Problem | Difficulty | Completed Date |
 |------|------|------|----------|
-| 20 | [Valid Parentheses](./problems/00020-valid-parentheses) | 🟢 Easy | 2026-03-31 |
-| 26 | [Remove Duplicates from Sorted Array](./problems/00026-remove-duplicates-from-sorted-array) | 🟢 Easy | 2026-03-31 |
-| 27 | [Remove Element](./problems/00027-remove-element) | 🟢 Easy | 2026-03-31 |
+| 20 | [Valid Parentheses](./problems/00020-valid-parentheses) | 🟢 Easy | 2026-04-01 |
+| 26 | [Remove Duplicates from Sorted Array](./problems/00026-remove-duplicates-from-sorted-array) | 🟢 Easy | 2026-04-01 |
+| 27 | [Remove Element](./problems/00027-remove-element) | 🟢 Easy | 2026-04-01 |
