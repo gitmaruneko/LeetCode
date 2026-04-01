@@ -13,30 +13,10 @@ import ast
 
 
 def get_leetcode_problem_info(problem_id):
-    """Fetch problem information from LeetCode GraphQL API (including topics)"""
+    """Fetch problem information from LeetCode API (including topics)"""
     
     # LeetCode GraphQL endpoint
-    url = "https://leetcode.com/graphql"
-    
-    # First, get all problems list to find titleSlug
-    all_problems_query = """
-    query problemsetQuestionList($categorySlug: String, $limit: Int, $skip: Int, $filters: QuestionListFilterInput) {
-        problemsetQuestionList: questionList(
-            categorySlug: $categorySlug
-            limit: $limit
-            skip: $skip
-            filters: $filters
-        ) {
-            questions: data {
-                questionId
-                questionFrontendId
-                title
-                titleSlug
-                difficulty
-            }
-        }
-    }
-    """
+    graphql_url = "https://leetcode.com/graphql"
     
     # Get detailed problem information (including topics)
     detail_query = """
@@ -60,31 +40,25 @@ def get_leetcode_problem_info(problem_id):
     try:
         headers = {
             'Content-Type': 'application/json',
-            'User-Agent': 'Mozilla/5.0'
+            'User-Agent': 'Mozilla/5.0',
+            'Referer': 'https://leetcode.com',
         }
         
-        # Step 1: Find the problem's titleSlug
-        payload = {
-            "query": all_problems_query,
-            "variables": {
-                "categorySlug": "",
-                "skip": 0,
-                "limit": 3000,
-                "filters": {}
-            }
-        }
-        
-        response = requests.post(url, json=payload, headers=headers, timeout=10)
-        data = response.json()
+        # Step 1: Find the problem's titleSlug via REST API (more reliable than bulk GraphQL)
+        rest_response = requests.get(
+            "https://leetcode.com/api/problems/all/",
+            headers={'User-Agent': 'Mozilla/5.0'},
+            timeout=15
+        )
+        rest_response.raise_for_status()
+        rest_data = rest_response.json()
         
         title_slug = None
-        if 'data' in data and 'problemsetQuestionList' in data['data']:
-            questions = data['data']['problemsetQuestionList']['questions']
-            
-            for q in questions:
-                if q['questionFrontendId'] == str(problem_id):
-                    title_slug = q['titleSlug']
-                    break
+        for entry in rest_data.get('stat_status_pairs', []):
+            stat = entry.get('stat', {})
+            if str(stat.get('question_id', '')) == str(problem_id):
+                title_slug = stat.get('question__title_slug')
+                break
         
         if not title_slug:
             return None
@@ -97,7 +71,7 @@ def get_leetcode_problem_info(problem_id):
             }
         }
         
-        detail_response = requests.post(url, json=detail_payload, headers=headers, timeout=10)
+        detail_response = requests.post(graphql_url, json=detail_payload, headers=headers, timeout=10)
         detail_data = detail_response.json()
         
         if 'data' in detail_data and 'question' in detail_data['data']:
