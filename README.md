@@ -80,10 +80,10 @@ python scripts/update-stats.py
 
 | Difficulty | Solved |
 |------|----------|
-| 🟢 Easy | 5 |
+| 🟢 Easy | 6 |
 | 🟡 Medium | 0 |
 | 🔴 Hard | 0 |
-| **Total** | **5** |
+| **Total** | **6** |
 
 
 ## Recent Practice
